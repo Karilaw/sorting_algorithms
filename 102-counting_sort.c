@@ -2,9 +2,8 @@
 /**
  * counting_sort - sorts an array of integers in ascending order
  * using the Counting sort algorithm
- * @array: array of integers to sort
- * @size: size of the array
- * Return: void
+ * @array: the array to be sorted
+ * @size: the size of the array
  */
 void counting_sort(int *array, size_t size)
 {
@@ -25,23 +24,21 @@ void counting_sort(int *array, size_t size)
 		count[i] = 0;
 
 	for (i = 0; i < (int)size; i++)
-		count[array[i]]++;
+		count[array[i]] += 1;
 
 	for (i = 1; i <= max; i++)
 		count[i] += count[i - 1];
 
-	for (i = size - 1; (int)i >= 0; i--)
+	print_array(count, max + 1);
+
+	for (j = size - 1; j >= 0; j--)
 	{
-		output[count[array[i]] - 1] = array[i];
-		count[array[i]]--;
+		output[count[array[j]] - 1] = array[j];
+		count[array[j]] -= 1;
 	}
 
-	for (j = 0, i = 0; i < (int)size; i++, j++)
-		array[j] = output[i];
-
-	for (i = 0; i <= max; i++)
-		printf("%d, ", count[i]);
-	printf("\n");
+	for (i = 0; i < (int)size; i++)
+		array[i] = output[i];
 
 	free(count);
 	free(output);
