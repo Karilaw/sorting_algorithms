@@ -4,7 +4,6 @@
  * using the Counting sort algorithm
  * @array: array of integers to sort
  * @size: size of the array
- *
  * Return: void
  */
 void counting_sort(int *array, size_t size)
