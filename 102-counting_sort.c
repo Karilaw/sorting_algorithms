@@ -1,28 +1,26 @@
 #include "sort.h"
-
 /**
- * counting_sort - sorts an array of integers in
- * ascending order using theCounting sort algorithm
- * @array: array to sort
+ * counting_sort - sorts an array of integers in ascending order
+ * using the Counting sort algorithm
+ * @array: array of integers to sort
  * @size: size of the array
+ *
+ * Return: void
  */
-
 void counting_sort(int *array, size_t size)
 {
-	int max, i, j;
+	int i, j, max = 0;
 	int *count, *output;
 
-	if (!array || size < 2)
+	if (array == NULL || size < 2)
 		return;
 
-	max = array[0];
-	for (i = 1; i < (int)size; i++)
+	for (i = 0; i < (int)size; i++)
 		if (array[i] > max)
 			max = array[i];
 
 	count = malloc(sizeof(int) * (max + 1));
-	if (!count)
-		return;
+	output = malloc(sizeof(int) * size);
 
 	for (i = 0; i <= max; i++)
 		count[i] = 0;
@@ -33,23 +31,18 @@ void counting_sort(int *array, size_t size)
 	for (i = 1; i <= max; i++)
 		count[i] += count[i - 1];
 
-	print_array(count, max + 1);
-
-	output = malloc(sizeof(int) * size);
-	if (!output)
-	{
-		free(count);
-		return;
-	}
-
-	for (i = size - 1; i >= 0; i--)
+	for (i = size - 1; (int)i >= 0; i--)
 	{
 		output[count[array[i]] - 1] = array[i];
 		count[array[i]]--;
 	}
 
-	for (j = 0; j < (int)size; j++)
-		array[j] = output[j];
+	for (j = 0, i = 0; i < (int)size; i++, j++)
+		array[j] = output[i];
+
+	for (i = 0; i <= max; i++)
+		printf("%d, ", count[i]);
+	printf("\n");
 
 	free(count);
 	free(output);
